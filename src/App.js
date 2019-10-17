@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cssClasses from './App.css'; //we create an object cssClasses that will have all the css classes of App.css
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary';
 
 class App extends Component  {
   state = {
@@ -25,9 +26,19 @@ class App extends Component  {
   }
 
   nameChangedHandler = (event, userId) => {
-      const person = this.state.persons.find();
-      console.log(person)
-    
+      const personIndex = this.state.persons.findIndex( p => {
+        return p.id === userId;
+      });
+      
+      const person = {
+        ...this.state.persons[personIndex]
+      }
+
+      person.name = event.target.value;
+      const persons = [...this.state.persons];
+      persons[personIndex] = person;
+      this.setState({persons: persons});
+      
   }
 
   togglePersonsHandler = () => {
@@ -57,13 +68,14 @@ class App extends Component  {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
+            return <ErrorBoundary key={person.id}>
+            <Person
             // key={person.id}
             click={() => this.deletePersonHandler(index)}
             name={person.name}
             age={person.age}
             change={(event) => this.nameChangedHandler(event, person.id)}>
-            </Person>
+            </Person></ErrorBoundary>
           })}
         </div>
       )  
