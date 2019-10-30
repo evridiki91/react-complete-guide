@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import cssClasses from './App.css'; //we create an object cssClasses that will have all the css classes of App.css
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary';
+import cssClasses from '../containers/App.css'; //we create an object cssClasses that will have all the css classes of App.css
+import Person from '../components/Persons/Person/Person';
+import ErrorBoundary from '../ErrorBoundary';
+import Persons from '../components/Persons/Persons'
+import Cockpit from '../components/Cockpit/Cockpit'
 
 class App extends Component  {
   state = {
@@ -62,39 +64,27 @@ class App extends Component  {
   render(){
     
     let persons = null;
-    let btnClass = '';
+    
     if (this.state.showPersons){
 
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return <ErrorBoundary key={person.id}>
-            <Person
-            // key={person.id}
-            click={() => this.deletePersonHandler(index)}
-            name={person.name}
-            age={person.age}
-            change={(event) => this.nameChangedHandler(event, person.id)}>
-            </Person></ErrorBoundary>
-          })}
+          <Persons
+          persons={this.state.persons}
+          click={this.deletePersonHandler}
+          change={this.nameChangedHandler}/>
         </div>
       )  
-      btnClass = cssClasses.Red;
     }
-    let classes = [];
-    if (this.state.persons.length <=2){
-      classes.push(cssClasses.Red);
-    }
-    if( this.state.persons.length <=1){
-      classes.push(cssClasses.Bold)
-    }
+    
 
     return (
       <div className={cssClasses.App}>
-        <h1>Hi I'm a React app</h1>
-        <p className={classes.join(' ')}>This is really working</p>
-        <button className={btnClass}
-          onClick={this.togglePersonsHandler}>Hide/Unhide persons</button>
+        <Cockpit
+        title={this.props.appTitle}
+        showPersons={this.state.showPersons}
+        persons={this.state.persons}
+        click={this.togglePersonsHandler}/>
       {persons}    
         
       </div>
