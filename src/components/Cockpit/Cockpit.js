@@ -1,8 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import cssClasses from './Cockpit.css'; //we create an object cssClasses that will have all the css classes of App.css
 
 
 const cockpit = (props) => {
+
+    useEffect(() => {
+      console.log('[cockpit.js] useEffect');
+      setTimeout(()=> {
+        alert('Saved data to cloud');
+      },1000);
+      return () => {
+        console.log('[cockpit.js] cleanup work')
+      }
+    },[]); 
+
+    useEffect( () => {
+      console.log('[cockpit.js] 2nd useEffect');
+      return() => {
+        console.log('[cockpit.js] cleanup work in 2nd userEffect');
+      }
+    })
+
+
     let classes = [];
     let btnClass = '';
     if(props.showPersons) {
