@@ -24,9 +24,10 @@ const cockpit = (props) => {
 
 
     let classes = [];
-    let btnClass = '';
+    let btnClasses = [];
     if(props.showPersons) {
-      btnClass = classes.Red
+      btnClasses.push(cssClasses.Red);
+      btnClasses.push(cssClasses.Cockpit);
     }
     if (props.personsLength <=2){
       classes.push(cssClasses.Red);
@@ -39,7 +40,7 @@ const cockpit = (props) => {
         <div>
             <h1>{props.title}</h1>
             <p className={classes.join(' ')}>This is really working</p>
-            <button className={btnClass}
+            <button className={btnClasses.join(' ')}
             onClick={props.click}>Hide/Unhide persons</button>
         </div>
     );
