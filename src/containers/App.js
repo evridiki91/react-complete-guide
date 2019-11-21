@@ -4,6 +4,8 @@ import Person from '../components/Persons/Person/Person';
 import ErrorBoundary from '../ErrorBoundary';
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
+import WithClass from '../hoc/WithClass';
+import Aux from '../hoc/Aux';
 
 class App extends Component  {
   state = {
@@ -99,16 +101,16 @@ class App extends Component  {
     
 
     return (
-      <div className={cssClasses.App}>
+      <WithClass classes={cssClasses.App}>
         <button onClick={()=> this.setState({showCockpit: false})}>Remove cockpit</button>
         {this.state.showCockpit ? <Cockpit
         title={this.props.appTitle}
         showPersons={this.state.showPersons}
-        persons={this.state.persons}
+        personsLength={this.state.persons.length}
         click={this.togglePersonsHandler}/> : null}
       {persons}    
         
-      </div>
+      </WithClass>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1',null,'Ello there!'));
   }
