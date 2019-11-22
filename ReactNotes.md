@@ -794,3 +794,82 @@ useEffect(() => {
       },1000);
     },[props.persons]); //This will only get called if props.persons changes
 ```
+Note: `useEffect()` By default, effects run after every completed render, but you can choose to fire them only when certain values have changed.
+
+### Setting the state correctly 
+Update the state when we depend on an old state: 
+```
+this.setState((prevState,props) => {
+        return {
+          persons: persons,
+          changeCounter: prevState.changeCounter + 1,
+        }
+      });
+```
+
+### Using PropTypes
+Using an external package we can return errors if the developer used the wrong props (good for team projects). 
+
+Install the package `npm install --save prop-types`.
+Import `prop-types`: `Import PropTypes from 'prop-types`
+
+Then create an object that will hold all propTypes:
+```
+Person.propTypes = {
+    click: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    change: PropTypes.func,
+};
+```
+If a dev uses state giving the wrong type they will get an error in the console.
+
+### Using Refs
+We can use `ref` which is a special property of React like `key`. We can set this on any JSX element. 
+1. First Method of using ref:
+```
+<input
+  key: "i2"
+  ref={(inputEl)=> {this.inputElement = inputEl}}
+>
+</input>
+```
+
+Then call `focus()` in componentDidMount() on top of the class.
+```
+componentDidMount(){
+  this.inputElement.focus();
+}
+```
+
+This code makes sure focus is in the last input element from all the Person components.
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement
+
+2. Second Method of using ref:
+This approach is newer - set inputElementRef into the class' constructor:
+```
+constructor(props){
+  super(props);
+  this.inputElementRef = React.createRef(); //This is a method from react to create a new ref.
+}
+```
+
+Then in `componentDidMount` call focus on the current inputElementRef:
+```
+componentDidMount(){
+  this.inputElementRef.current.focus();
+}
+```
+
+Note: Don't forget to set ref in your JSX to be `this.inputElementRef` : `ref={this.inputElementRef}`.
+
+Both approaches are okay to use. 
+
+### Refs with React Hooks
+In the previous section we saw how to use references in class components, what about functional Components?
+
+The first approach we saw earlier can't be used in functional components but the 2nd method can. 
+
+Example: Click the button in cockpit to hide/unhide persons whenever the entire page loads.
+
+
