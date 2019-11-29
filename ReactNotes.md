@@ -872,4 +872,47 @@ The first approach we saw earlier can't be used in functional components but the
 
 Example: Click the button in cockpit to hide/unhide persons whenever the entire page loads.
 
+### Using the Context API to pass props
+In order to pass props around components we need to pass props in all of the components until we reach the component we want. Sometimes though, 
+props are not needed in some of the in-between components. In order to avoid following the props chain order until you reach the component you want it's better to use the Context API to access the props value in all the components you want. 
+
+
+First we need to set up a folder called `context` that will hold all of the context files. Create a JS file called `auth-context.js`. 
+We set up our context component function and export it as `authContext`. 
+```
+import React from 'react';
+
+const authContext = React.createContext({
+    authenticated: false,
+    login: () => {},
+});
+
+export default authContext;
+``` 
+
+Then, just import this file in all the files you want to use it.
+
+#### Context.Provider
+Every Context Object comes with a Provider React component that allows consuming components to subscribe to context changes.
+
+Accepts a `value` prop to be passed to consuming components that are descendets of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
+
+IMPORTANT: All consumers that are descendants of a Provider will re-render whenever the Provider's `value` prop changes. The propagation from Provider to its descendant consumers is not subject to the `shouldComponentUpdate` method, so the consumer is updated even when an ancestor component bails out of the update. 
+
+NOTE: Changes are determined by comparing the new and old values using the same algorithm as `Object.is`.
+
+```
+<MyContext.Provider value={/* some value */}>
+```
+
+#### Context.Consumer
+A React component that subscribes to context changes. This lets you subscribe to a context within a *function component*.
+
+IMPORTANT: Requires a `function as a child`. The function receives the current context value and returns a React node. The `value` argument passed to the function will be equal to the `value` prop of the closest Provider for this context above the tree. If there is no Provider for this context above, the `value` argument will be equal to the `defaultValue` tha was passed to createContext().
+
+```
+<MyContext.Consumer>
+  {value => /* render something based on the context value */}
+</MyContext.Consumer>
+```
 

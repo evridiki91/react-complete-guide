@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Person from './Person/Person';
 import Aux from '../../hoc/Aux';
+import AuthContext from '../../context/auth-context';
 
 
 
@@ -42,7 +43,8 @@ class Persons extends Component{
             click={() => this.props.click(index)}
             name={person.name}
             age={person.age}
-            change={(event) => this.props.change(event, person.id)}>
+            change={(event) => this.props.change(event, person.id)}
+            isAuth={this.props.isAuthenticated}>
             </Person>
             );
         });
