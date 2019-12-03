@@ -916,3 +916,16 @@ IMPORTANT: Requires a `function as a child`. The function receives the current c
 </MyContext.Consumer>
 ```
 
+### Useful Resources
+```
+More on useEffect(): https://reactjs.org/docs/hooks-effect.html
+
+State & Lifecycle: https://reactjs.org/docs/state-and-lifecycle.html
+
+PropTypes: https://reactjs.org/docs/typechecking-with-proptypes.html
+
+Higher Order Components: https://reactjs.org/docs/higher-order-components.html
+
+Refs: https://reactjs.org/docs/refs-and-the-dom.html
+```
+
